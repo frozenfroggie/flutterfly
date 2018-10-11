@@ -8,7 +8,6 @@ import { NavigationComponent } from './shared/navigation/navigation.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { FlightInspirationComponent } from './flight-inspiration/flight-inspiration.component';
-import { FlightService } from './flight.service';
 import { FlightSearchComponent } from './homepage/flight-search/flight-search.component';
 import { FlightSearchAirportComponent } from './homepage/flight-search/flight-search-airport/flight-search-airport.component';
 import { FlightSearchDateComponent } from './homepage/flight-search/flight-search-date/flight-search-date.component';
@@ -29,7 +28,6 @@ import { FlightSearchDateComponent } from './homepage/flight-search/flight-searc
     FormsModule,
     HttpClientModule
   ],
-  providers: [FlightService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
