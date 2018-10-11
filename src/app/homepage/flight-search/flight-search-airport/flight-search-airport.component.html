@@ -1,0 +1,15 @@
+<div class="airport-input">
+  <input
+    type="text"
+    [placeholder]="placeholder"
+    [(ngModel)]="airport"
+    (input)="onUpdateAirport($event)"/>
+  <div *ngIf="airport !== ''" class="autocomplete">
+    <div
+      class="location"
+      *ngFor="let location of autocompleteLocations"
+      (click)="onClickAutocompletedLocation(location.value)">
+      {{location.label}}
+    </div>
+  </div>
+</div>

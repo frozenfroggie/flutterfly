@@ -1,0 +1,27 @@
+input {
+  height: 50px;
+  margin-top: 15px;
+  width: 280px;
+  border-width: 0px;
+  border-radius: 3px;
+  text-indent: 10px;
+}
+.airport-input {
+  position: relative;
+  width: 280px;
+}
+.autocomplete {
+  position: absolute;
+  top: 0px;
+  z-index: 3;
+  background-color: red;
+}
+.location {
+  position: relative;
+  background-color: white;
+  padding: 10px;
+  width: 300px;
+  &:hover {
+    cursor: pointer;
+  }
+}

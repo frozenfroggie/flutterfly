@@ -1,0 +1,19 @@
+.footer {
+  margin-top: 0px;
+  height: 200px;
+  background-color: #201A44;
+  color: white;
+  width: auto;
+  position: relative;
+  z-index: 2;
+  padding: 70px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .footer-rights {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
