@@ -1,15 +1,31 @@
 <div class="form-content-wrapper">
   <div class="form-content">
-    <app-flight-search-airport placeholder="From"></app-flight-search-airport>
-    <app-flight-search-airport placeholder="To"></app-flight-search-airport>
+    <app-flight-search-airport
+      direction="origin"
+      (airportUpdated)="airportUpdated($event)"
+      (suggestedLocationClicked)="suggestedLocationClicked($event)"
+      [autocompleteSuggestions]="origin.autocompleteSuggestions">
+    </app-flight-search-airport>
+    <app-flight-search-airport
+      direction="destination"
+      (airportUpdated)="airportUpdated($event)"
+      (suggestedLocationClicked)="suggestedLocationClicked($event)"
+      [autocompleteSuggestions]="destination.autocompleteSuggestions">
+    </app-flight-search-airport>
     <div class="date-container">
-      <app-flight-search-date placeholder="Departure"></app-flight-search-date>
-      <app-flight-search-date placeholder="Return"></app-flight-search-date>
+      <app-flight-search-date
+        direction="origin"
+        (dateUpdated)="dateUpdated($event)">
+      </app-flight-search-date>
+      <app-flight-search-date
+        direction="destination"
+        (dateUpdated)="dateUpdated($event)">
+      </app-flight-search-date>
     </div>
     <div class="who-class-container">
       <input class="who" type="text" placeholder="Who"/>
       <input class="class" type="text" placeholder="Cabin class"/>
     </div>
-    <button class="book-btn">Book now</button>
+    <button class="book-btn" (click)="flightSearch()">Book now</button>
   </div>
 </div>

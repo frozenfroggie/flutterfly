@@ -1,6 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-
-import { FlightService } from '../../../flight.service';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-flight-search-airport',
@@ -8,33 +6,31 @@ import { FlightService } from '../../../flight.service';
   styleUrls: ['./flight-search-airport.component.scss']
 })
 export class FlightSearchAirportComponent implements OnInit {
-  airport: string = '';
-  autocompleteLocations: {label: string, value: string}[] = [];
+  iataCode: string = '';
 
-  @Input() placeholder: string;
+  @Input() direction: string;
+  @Input() autocompleteSuggestions: {value: string, label: string}[];
 
-  constructor(private flightService: FlightService) { }
+  @Output() airportUpdated = new EventEmitter<{value: string, direction: string}>();
+  @Output() suggestedLocationClicked = new EventEmitter<{value: string, direction: string}>();
 
   ngOnInit() {
   }
 
   onUpdateAirport(event: Event) {
-    this.airport = (<HTMLInputElement>event.target).value;
-    if((<HTMLInputElement>event.target).value === '') {
-      this.autocompleteLocations = [];
-      return;
-    }
-    this.flightService.airportAutocomplete(this.airport)
-      .subscribe(
-        (locations: any[]) => {
-          this.autocompleteLocations = locations;
-        }
-      );
+    this.iataCode = (<HTMLInputElement>event.target).value;
+    this.airportUpdated.emit({
+      value: this.iataCode,
+      direction: this.direction
+    });
   }
 
-  onClickAutocompletedLocation(locationValue: string) {
-    this.airport = locationValue;
-    this.autocompleteLocations = [];
+  onClickSuggestedLocation(locationValue: string) {
+    this.iataCode = locationValue;
+    this.suggestedLocationClicked.emit({
+      value: this.iataCode,
+      direction: this.direction
+    });
   }
 
 }
