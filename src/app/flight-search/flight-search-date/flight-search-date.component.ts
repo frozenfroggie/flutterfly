@@ -25,4 +25,7 @@ export class FlightSearchDateComponent implements OnInit {
     });
   }
 
+  getCurrentDate() {
+    return new Date().toJSON().split('T')[0];
+  }
 }

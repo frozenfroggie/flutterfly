@@ -7,4 +7,16 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'flutterfly';
+  flights: any[] = [];
+
+  ngOnInit() {
+    const flights = localStorage.getItem('flights');
+    console.log('init!', JSON.parse(flights));
+    this.flights = JSON.parse(flights);
+  }
+
+  gotFlights(results: any[]) {
+    console.log('2', results);
+    this.flights = results;
+  }
 }

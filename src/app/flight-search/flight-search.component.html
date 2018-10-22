@@ -23,8 +23,12 @@
       </app-flight-search-date>
     </div>
     <div class="who-class-container">
-      <input class="who" type="text" placeholder="Who"/>
-      <input class="class" type="text" placeholder="Cabin class"/>
+      <input class="who" type="number" min="1" max="10" placeholder="Who" [(ngModel)]="who"/>
+      <select name="class" class="class" [(ngModel)]="cabinClass">
+        <option value="economy">ECONOMY</option>
+        <option value="business">BUSSINESS</option>
+        <option value="first">FIRST</option>
+      </select>
     </div>
     <button class="book-btn" (click)="flightSearch()">Book now</button>
   </div>

@@ -1,0 +1,73 @@
+
+.flight-results {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  top: 100vh;
+  background-color: white;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  overflow-x: auto;
+  .flight {
+    display: grid;
+    grid-template-columns: auto 150px;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "outbound price"
+      "inbound price";
+    background-color: white;
+    margin: 20px;
+    padding: 30px 50px;
+    width: 80%;
+    height: auto;
+    box-shadow: 2px 4px 5px 0px rgba(0,0,0,0.6);
+    border: 1px solid #d9e1e8;
+    .flight-outbound {
+      grid-area: outbound;
+    }
+    .flight-inbound {
+      grid-area: inbound;
+    }
+    .price {
+      grid-area: price;
+      justify-self: center;
+      align-self: center;
+    }
+    .flight-outbound, .flight-inbound {
+      display: grid;
+      grid-template-columns: 150px 500px 1fr;
+      grid-template-rows: auto;
+      justify-items: center;
+      align-items: center;
+      grid-template-areas:
+        "airlane-logo time stops";
+      .flight-direction {
+        grid-area: direction;
+      }
+      .flight-airlane-logo {
+        grid-area: airlane-logo;
+        align-self: center;
+      }
+      .flight-time {
+        grid-area: time;
+        font-weight: 500;
+        font-size: 1.3em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .flight-duration {
+          position: relative;
+          top: -10px;
+          margin: 10px;
+          border-bottom: 1px solid black;
+        }
+      }
+      .flight-stops {
+        grid-area: stops;
+      }
+    }
+  }
+}

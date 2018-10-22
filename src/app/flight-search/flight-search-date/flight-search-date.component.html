@@ -3,4 +3,6 @@
   type="date"
   [placeholder]="placeholder"
   [(ngModel)]="date"
-  (input)="onUpdateDate($event)" />
+  (input)="onUpdateDate($event)"
+  [min]="getCurrentDate()"
+  />

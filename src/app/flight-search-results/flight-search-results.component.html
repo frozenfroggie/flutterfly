@@ -1,0 +1,33 @@
+<div class="flight-results" *ngIf="flights.length > 0">
+  <div *ngFor="let flight of flights" class="flight">
+    <div class="flight-outbound">
+      <img class="flight-airlane-logo" width="70px" [src]="'https://pics.avs.io/200/200/' + flight.itineraries[0].outbound.flights[0].marketing_airline + '.png'" />
+      <div class="flight-time">
+        <div class="from">
+          {{ flight.itineraries[0].outbound.flights[0].origin.airport }}
+          {{ flight.itineraries[0].outbound.flights[0].departs_at.split("T")[1] }}
+        </div>
+        <div class="flight-duration">{{ flight.itineraries[0].outbound.duration }}h</div>
+        <div class="to">
+          {{ flight.itineraries[0].outbound.flights[flight.itineraries[0].outbound.flights.length - 1].arrives_at.split("T")[1]}}
+          {{ flight.itineraries[0].outbound.flights[flight.itineraries[0].outbound.flights.length - 1].destination.airport }}</div>
+        </div>
+      <div class="flight-stops">{{ flight.itineraries[0].outbound.flights.length - 1 === 0 ? "Non-Stop" : "Stops: " + (flight.itineraries[0].outbound.flights.length - 1) }}</div>
+    </div>
+    <div class="flight-inbound">
+      <img class="flight-airlane-logo" width="70px" [src]="'https://pics.avs.io/200/200/' + flight.itineraries[0].inbound.flights[0].marketing_airline + '.png'" />
+      <div class="flight-time">
+        <div class="from">
+          {{ flight.itineraries[0].inbound.flights[0].origin.airport }}
+          {{ flight.itineraries[0].inbound.flights[0].departs_at.split("T")[1] }}
+        </div>
+        <div class="flight-duration">{{ flight.itineraries[0].inbound.duration }}h</div>
+        <div class="to">
+          {{ flight.itineraries[0].inbound.flights[flight.itineraries[0].inbound.flights.length - 1].arrives_at.split("T")[1]}}
+          {{ flight.itineraries[0].inbound.flights[flight.itineraries[0].inbound.flights.length - 1].destination.airport }}</div>
+        </div>
+      <div class="flight-stops">{{ flight.itineraries[0].inbound.flights.length - 1 === 0 ? "Non-Stop" : "Stops: " + (flight.itineraries[0].inbound.flights.length - 1) }}</div>
+    </div>
+    <div class="price"><h2>{{ flight.fare.total_price }} PLN</h2></div>
+  </div>
+</div>
