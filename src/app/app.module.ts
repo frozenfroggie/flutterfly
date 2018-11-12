@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { Routes, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './shared/navigation/navigation.component';
@@ -12,6 +13,11 @@ import { FlightSearchComponent } from './flight-search/flight-search.component';
 import { FlightSearchAirportComponent } from './flight-search/flight-search-airport/flight-search-airport.component';
 import { FlightSearchDateComponent } from './flight-search/flight-search-date/flight-search-date.component';
 import { FlightSearchResultsComponent } from './flight-search-results/flight-search-results.component';
+
+const appRoutes: Routes = [
+  { path: '', component: HomepageComponent },
+  { path: 'flights', component: FlightSearchResultsComponent }
+];
 
 @NgModule({
   declarations: [
@@ -28,7 +34,8 @@ import { FlightSearchResultsComponent } from './flight-search-results/flight-sea
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot(appRoutes)
   ],
   bootstrap: [AppComponent]
 })

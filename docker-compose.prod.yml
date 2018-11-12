@@ -1,0 +1,35 @@
+version: '3.7'
+
+services:
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.prod
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./dist/flutterfly:/etc/nginx/html/
+    depends_on:
+      - api
+
+  api:
+    container_name: backend
+    build: ./server
+    command: npm start
+    working_dir: /usr/src/flutterfly-backend
+    environment:
+      MONGO_URI: mongodb://mongo:27017/flutterfly
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./server/:/usr/src/flutterfly-backend
+    depends_on:
+      - mongo
+
+  mongo:
+    container_name: mongodb
+    image: mongo
+    ports:
+      - "27017:27017"

@@ -1,8 +1,50 @@
 .content {
+  padding: 50px 0px;
   position: relative;
   margin-top: 85vh;
   background-color: white;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: grid;
+  grid-template-columns: 500px 500px;
+  grid-template-rows: auto auto auto;
+  grid-column-gap: 10px;
+  grid-row-gap: 15px;
+  .content-photo {
+    position: relative;
+    height: 300px;
+    width: 500px;
+    overflow: hidden;
+    &:hover {
+      cursor: pointer;
+      .photo {
+        transform: scale(1.1);
+      }
+    }
+    .photo {
+      position: relative;
+      height: 400px;
+      min-width: 500px;
+      transition: transform .2s ease-in-out;
+    }
+    .photo-overlay {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0,0,0,0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .overlay-country {
+        color: white;
+        text-align: center;
+      }
+    }
+  }
 }

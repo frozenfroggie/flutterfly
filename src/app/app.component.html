@@ -1,8 +1,5 @@
 <div>
   <app-navigation></app-navigation >
-  <app-homepage></app-homepage>
-  <app-flight-search (gotFlights)="gotFlights($event)"></app-flight-search>
-  <app-flight-search-results [flights]="flights"></app-flight-search-results>
-  <app-flight-inspiration></app-flight-inspiration>
+  <router-outlet></router-outlet>
   <app-footer></app-footer>
 </div>

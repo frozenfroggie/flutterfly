@@ -1,4 +1,4 @@
-<div class="flight-results" *ngIf="flights.length > 0">
+<div class="flight-results" *ngIf="flights.length > 0; else loading">
   <div *ngFor="let flight of flights" class="flight">
     <div class="flight-outbound">
       <img class="flight-airlane-logo" width="70px" [src]="'https://pics.avs.io/200/200/' + flight.itineraries[0].outbound.flights[0].marketing_airline + '.png'" />
@@ -31,3 +31,8 @@
     <div class="price"><h2>{{ flight.fare.total_price }} PLN</h2></div>
   </div>
 </div>
+<ng-template #loading>
+  <div class="loader">
+    <h1>Loading</h1>
+  </div>
+</ng-template>

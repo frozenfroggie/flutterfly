@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FlightService } from '../flight.service';
 
 @Component({
   selector: 'app-flight-search-results',
@@ -6,10 +7,14 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./flight-search-results.component.scss']
 })
 export class FlightSearchResultsComponent implements OnInit {
+  title = 'flutterfly';
+  flights: any[] = [];
 
-  @Input() flights: any[];
-
-  constructor() { }
+  constructor(private flightService: FlightService) {
+    this.flightService.gotFlights.subscribe(
+      (flights) => this.flights = flights
+    );
+  }
 
   ngOnInit() {
   }

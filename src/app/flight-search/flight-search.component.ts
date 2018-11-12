@@ -1,4 +1,5 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { FlightService } from '../flight.service';
 
@@ -37,8 +38,7 @@ export class FlightSearchComponent implements OnInit {
   who: number = 1;
   cabinClass: string = 'economy';
   flightsResults = [];
-  @Output() gotFlights = new EventEmitter<any>();
-  constructor(private flightService: FlightService) { }
+  constructor(private flightService: FlightService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -67,11 +67,11 @@ export class FlightSearchComponent implements OnInit {
   }
 
   flightSearch() {
+    this.router.navigate(['flights']);
     this.flightService.lowFareSearch(this.origin, this.destination, this.who, this.cabinClass)
       .subscribe(
         (flights) => {
-          localStorage.setItem('flights', JSON.stringify(flights.results));
-          this.gotFlights.emit(flights.results);
+          this.flightService.gotFlights.emit(flights.results);
         }
       )
   }
