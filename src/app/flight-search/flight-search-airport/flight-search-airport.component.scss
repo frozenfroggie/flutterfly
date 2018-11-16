@@ -6,6 +6,9 @@ input {
   border-radius: 3px;
   text-indent: 10px;
 }
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
 .airport-input {
   position: relative;
   width: 280px;

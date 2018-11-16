@@ -11,9 +11,19 @@ const getNearestLocations = async (ll) => {
   }
 }
 
-const getInspirations = async (nearestAirport) => {
+const getDateRange = () => {
+  let from = new Date();
+  let to = new Date();
+  to.setMonth(to.getMonth() + 3);
+  return {
+    from: from.toJSON().split('T')[0],
+    to: to.toJSON().split('T')[0]
+  }
+}
+
+const getInspirations = async (nearestAirport, dateRange) => {
   try {
-    const response = await axios.get(`https://api.sandbox.amadeus.com/v1.2/flights/inspiration-search?apikey=${process.env.AMADEUS_API_KEY}&origin=${nearestAirport}&departure_date=2018-11-15--2018-12-06&aggregation_mode=COUNTRY`);
+    const response = await axios.get(`https://api.sandbox.amadeus.com/v1.2/flights/inspiration-search?apikey=${process.env.AMADEUS_API_KEY}&origin=${nearestAirport}&departure_date=${dateRange.from}--${dateRange.to}&aggregation_mode=COUNTRY`);
     const inspirations = response.data.results;
     const currency = response.data.currency;
     return { inspirations, currency };
@@ -51,7 +61,8 @@ module.exports = {
       nearestLocation.airport = 'PAR';
 
       // get inspirations
-      const { inspirations, currency } = await getInspirations(nearestLocation.airport);
+      const dateRange = getDateRange();
+      const { inspirations, currency } = await getInspirations(nearestLocation.airport, dateRange);
       let inspirationsNum = 0;
       for(let i = 0; i < 6; i++) {
         const inspiration = inspirations[i];
@@ -64,6 +75,7 @@ module.exports = {
 
       res.json(inspirations);
     } catch(err) {
+      console.log(err);
       res.status(500).json(err);
     }
   },
@@ -80,8 +92,13 @@ module.exports = {
     try {
       const { origin, destination, departure_date, return_date, travel_class, adults } = req.query;
       const response = await axios.get(`https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?apikey=${process.env.AMADEUS_API_KEY}&origin=${origin}&destination=${destination}&departure_date=${departure_date}&number_of_results=5${return_date !== '' ? '&return_date=' + return_date : ''}&adults=${adults}&travel_class=${travel_class}&currency=PLN`)
+      console.log('???', response);
       res.json(response.data);
     } catch(err) {
+      console.log(err.response.data.message);
+      if(err.response.data.message === 'No result found.') {
+        res.status(404).json({msg: err.response.data.message});
+      }
       res.status(500).json({msg: err});
     }
   }

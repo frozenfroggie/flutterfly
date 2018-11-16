@@ -7,11 +7,17 @@ input {
   border-radius: 3px;
   text-indent: 10px;
 }
-.date-input {
-  width: 130px;
-  text-indent: 3px;
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
 }
-
+.date-container {
+  margin-top: 15px;
+  .date-input {
+    width: 130px;
+    text-indent: 3px;
+    margin: 0px 9px;
+  }
+}
 [type="date"] {
   background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  92% 50% no-repeat ;
 }

@@ -1,35 +1,21 @@
 <div class="form-content-wrapper">
-  <div class="form-content">
+  <form class="form-content" (ngSubmit)="onSubmit()" [formGroup]="flightSearchForm">
     <app-flight-search-airport
-      direction="origin"
-      (airportUpdated)="airportUpdated($event)"
       (suggestedLocationClicked)="suggestedLocationClicked($event)"
-      [autocompleteSuggestions]="origin.autocompleteSuggestions">
+      (formReady)="formInitialized('airport', $event)">
     </app-flight-search-airport>
-    <app-flight-search-airport
-      direction="destination"
-      (airportUpdated)="airportUpdated($event)"
-      (suggestedLocationClicked)="suggestedLocationClicked($event)"
-      [autocompleteSuggestions]="destination.autocompleteSuggestions">
-    </app-flight-search-airport>
-    <div class="date-container">
-      <app-flight-search-date
-        direction="origin"
-        (dateUpdated)="dateUpdated($event)">
-      </app-flight-search-date>
-      <app-flight-search-date
-        direction="destination"
-        (dateUpdated)="dateUpdated($event)">
-      </app-flight-search-date>
-    </div>
+    <app-flight-search-date
+      (dateUpdated)="dateUpdated($event)"
+      (formReady)="formInitialized('date', $event)">
+    </app-flight-search-date>
     <div class="who-class-container">
-      <input class="who" type="number" min="1" max="10" placeholder="Who" [(ngModel)]="who"/>
-      <select name="class" class="class" [(ngModel)]="cabinClass">
+      <input formControlName="who" class="who" type="number" min="1" max="10" placeholder="Who" [(ngModel)]="who"/>
+      <select formControlName="cabinClass" class="class" [(ngModel)]="cabinClass" name="cabinClass">
         <option value="economy">ECONOMY</option>
         <option value="business">BUSSINESS</option>
         <option value="first">FIRST</option>
       </select>
     </div>
-    <button class="book-btn" (click)="flightSearch()">Book now</button>
-  </div>
+    <button type="submit" class="book-btn">Book now</button>
+  </form>
 </div>

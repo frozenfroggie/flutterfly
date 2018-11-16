@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { FlightService } from '../flight.service';
 
@@ -9,69 +10,44 @@ import { FlightService } from '../flight.service';
   styleUrls: ['./flight-search.component.scss']
 })
 export class FlightSearchComponent implements OnInit {
-  origin: {
-    value: string,
-    autocompleteSuggestions: {
-      value: string,
-      label: string
-    }[],
-    date: string
-  } = {
-    value: '',
-    autocompleteSuggestions: [],
-    date: ''
-  }
-
-  destination: {
-    value: string,
-    autocompleteSuggestions: {
-      value: string,
-      label: string
-    }[],
-    date: string
-  } = {
-    value: '',
-    autocompleteSuggestions: [],
-    date: ''
-  }
 
   who: number = 1;
   cabinClass: string = 'economy';
   flightsResults = [];
+
+  flightSearchForm: FormGroup;
+
   constructor(private flightService: FlightService, private router: Router) { }
 
   ngOnInit() {
+    this.flightSearchForm = new FormGroup({
+      'who': new FormControl(null, Validators.required),
+      'cabinClass': new FormControl(null, Validators.required)
+    });
   }
 
-  airportUpdated({value, direction}: {value: string, direction: string}) {
-    this[direction].value = value;
-    if(value === '') {
-      this[direction].autocompleteSuggestions = [];
-      return;
+  formInitialized(name: string, form: FormGroup) {
+    this.flightSearchForm.setControl(name, form);
+  }
+
+  onSubmit() {
+    const { value, status } = this.flightSearchForm;
+    if(status === 'VALID') {
+      this.flightSearch(value);
     }
-    this.flightService.airportAutocomplete(value)
-      .subscribe(
-        (locations: any[]) => {
-          this[direction].autocompleteSuggestions = locations;
-        }
-      );
   }
 
-  dateUpdated({date, direction}: {date: string, direction: string}) {
-    this[direction].date = date;
-  }
-
-  suggestedLocationClicked({value, direction}: {value: string, direction: string}) {
-    this[direction].autocompleteSuggestions = [];
-    this[direction].value = value;
-  }
-
-  flightSearch() {
+  flightSearch({who, cabinClass, airport, date}: {who: number, cabinClass: string, airport: {origin: string, destination: string}, date: {origin: string, destination: string}}) {
     this.router.navigate(['flights']);
-    this.flightService.lowFareSearch(this.origin, this.destination, this.who, this.cabinClass)
+    this.flightService.lowFareSearch(airport, date, who, cabinClass)
       .subscribe(
         (flights) => {
           this.flightService.gotFlights.emit(flights.results);
+        },
+        (err) => {
+          if(err.error && err.error.msg) {
+            this.flightService.gotError.emit(err.error.msg);
+          }
         }
       )
   }

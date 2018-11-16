@@ -13,7 +13,7 @@ services:
       - api
 
   app:
-    container_name: frontend
+    container_name: frontend-flutterfly
     build: ./
     working_dir: /usr/src/flutterfly
     ports:
@@ -22,7 +22,7 @@ services:
       - ./:/usr/src/flutterfly
 
   api:
-    container_name: backend
+    container_name: backend-flutterfly
     build: ./server
     command: npm run start-watch
     working_dir: /usr/src/flutterfly-backend
@@ -36,7 +36,7 @@ services:
       - mongo
 
   mongo:
-    container_name: mongodb
+    container_name: mongodb-flutterfly
     image: mongo
     ports:
       - "27017:27017"

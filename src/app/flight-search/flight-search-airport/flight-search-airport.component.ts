@@ -1,4 +1,6 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FlightService } from '../../flight.service';
 
 @Component({
   selector: 'app-flight-search-airport',
@@ -6,31 +8,67 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./flight-search-airport.component.scss']
 })
 export class FlightSearchAirportComponent implements OnInit {
-  iataCode: string = '';
 
-  @Input() direction: string;
-  @Input() autocompleteSuggestions: {value: string, label: string}[];
+  origin: {
+    iataCode: string,
+    value: string,
+    autocompleteSuggestions: {
+      value: string,
+      label: string
+    }[]
+  } = {
+    iataCode: '',
+    value: '',
+    autocompleteSuggestions: []
+  }
 
-  @Output() airportUpdated = new EventEmitter<{value: string, direction: string}>();
-  @Output() suggestedLocationClicked = new EventEmitter<{value: string, direction: string}>();
+  destination: {
+    iataCode: string,
+    value: string,
+    autocompleteSuggestions: {
+      value: string,
+      label: string
+    }[]
+  } = {
+    iataCode: '',
+    value: '',
+    autocompleteSuggestions: []
+  }
+
+  airportForm: FormGroup;
+
+  @Output() formReady = new EventEmitter<FormGroup>()
+
+  constructor(private flightService: FlightService) { }
 
   ngOnInit() {
+    this.airportForm = new FormGroup({
+      'origin': new FormControl(null, Validators.required),
+      'destination': new FormControl(null, Validators.required)
+    });
+
+     // Emit the form group to the father to do whatever it wishes
+     this.formReady.emit(this.airportForm);
   }
 
-  onUpdateAirport(event: Event) {
-    this.iataCode = (<HTMLInputElement>event.target).value;
-    this.airportUpdated.emit({
-      value: this.iataCode,
-      direction: this.direction
-    });
+  onUpdateAirport(direction: string, event: Event) {
+    this[direction].iataCode = (<HTMLInputElement>event.target).value;
+    this[direction].value = this[direction].iataCode;
+    if(this[direction].iataCode === '') {
+      this[direction].autocompleteSuggestions = [];
+      return;
+    }
+    this.flightService.airportAutocomplete(this[direction].iataCode)
+      .subscribe(
+        (locations: any[]) => {
+          this[direction].autocompleteSuggestions = locations;
+        }
+      );
   }
 
-  onClickSuggestedLocation(locationValue: string) {
-    this.iataCode = locationValue;
-    this.suggestedLocationClicked.emit({
-      value: this.iataCode,
-      direction: this.direction
-    });
+  onClickSuggestedLocation(direction: string, locationValue: string) {
+    this[direction].iataCode = locationValue;
+    this[direction].autocompleteSuggestions = [];
   }
 
 }

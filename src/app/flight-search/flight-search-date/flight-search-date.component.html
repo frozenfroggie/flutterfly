@@ -1,7 +1,18 @@
-<input
-  class="date-input"
-  type="date"
-  [(ngModel)]="date"
-  (input)="onUpdateDate($event)"
-  [min]="getCurrentDate()"
-  />
+<div class="date-container" [formGroup]="dateForm">
+  <input
+    class="date-input"
+    type="date"
+    [(ngModel)]="origin.date"
+    (input)="onUpdateDate('origin', $event)"
+    [min]="getCurrentDate()"
+    formControlName="origin"
+    />
+  <input
+    class="date-input"
+    type="date"
+    [(ngModel)]="destination.date"
+    (input)="onUpdateDate('destination', $event)"
+    [min]="getCurrentDate()"
+    formControlName="destination"
+    />
+</div>

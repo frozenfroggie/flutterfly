@@ -33,6 +33,6 @@
 </div>
 <ng-template #loading>
   <div class="loader">
-    <h1>Loading</h1>
+    <h1>{{ error ? error : 'Loading' }}</h1>
   </div>
 </ng-template>

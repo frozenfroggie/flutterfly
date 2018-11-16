@@ -1,15 +1,37 @@
-<div class="airport-input">
-  <input
-    type="text"
-    [placeholder]="direction.charAt(0).toUpperCase() + direction.slice(1)"
-    [(ngModel)]="iataCode"
-    (input)="onUpdateAirport($event)" />
-  <div *ngIf="iataCode !== ''" class="autocomplete">
-    <div
-      class="location"
-      *ngFor="let suggestedLocation of autocompleteSuggestions"
-      (click)="onClickSuggestedLocation(suggestedLocation.value)">
-      {{ suggestedLocation.label }}
+<div [formGroup]="airportForm">
+
+  <div class="airport-input">
+    <input
+      type="text"
+      placeholder="Origin"
+      [(ngModel)]="origin.iataCode"
+      formControlName="origin"
+      (input)="onUpdateAirport('origin', $event)" />
+    <div *ngIf="origin.iataCode !== ''" class="autocomplete">
+      <div
+        class="location"
+        *ngFor="let suggestedLocation of origin.autocompleteSuggestions"
+        (click)="onClickSuggestedLocation('origin', suggestedLocation.value)">
+        {{ suggestedLocation.label }}
+      </div>
     </div>
   </div>
+
+  <div class="airport-input">
+    <input
+      type="text"
+      placeholder="Destination"
+      [(ngModel)]="destination.iataCode"
+      formControlName="destination"
+      (input)="onUpdateAirport('destination', $event)" />
+    <div *ngIf="destination.iataCode !== ''" class="autocomplete">
+      <div
+        class="location"
+        *ngFor="let suggestedLocation of destination.autocompleteSuggestions"
+        (click)="onClickSuggestedLocation('destination', suggestedLocation.value)">
+        {{ suggestedLocation.label }}
+      </div>
+    </div>
+  </div>
+
 </div>
