@@ -9447,3 +9447,5 @@
 {"message":"Connected to mongodb://mongo:27017/flutterfly...","level":"info"}
 {"message":"Listening on port 3001...","level":"info"}
 {"message":"Connected to mongodb://mongo:27017/flutterfly...","level":"info"}
+{"message":"Listening on port 3001...","level":"info"}
+{"message":"Connected to mongodb://mongo:27017/flutterfly...","level":"info"}

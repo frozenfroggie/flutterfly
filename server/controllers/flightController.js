@@ -92,10 +92,8 @@ module.exports = {
     try {
       const { origin, destination, departure_date, return_date, travel_class, adults } = req.query;
       const response = await axios.get(`https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?apikey=${process.env.AMADEUS_API_KEY}&origin=${origin}&destination=${destination}&departure_date=${departure_date}&number_of_results=5${return_date !== '' ? '&return_date=' + return_date : ''}&adults=${adults}&travel_class=${travel_class}&currency=PLN`)
-      console.log('???', response);
       res.json(response.data);
     } catch(err) {
-      console.log(err.response.data.message);
       if(err.response.data.message === 'No result found.') {
         res.status(404).json({msg: err.response.data.message});
       }
