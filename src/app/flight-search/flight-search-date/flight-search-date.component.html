@@ -1,4 +1,4 @@
-<div class="date-container" [formGroup]="dateForm">
+<div [ngClass]="{'date-container': display === 'full', 'date-container-fixed': display !== 'full'}" [formGroup]="dateForm">
   <input
     class="date-input"
     type="date"

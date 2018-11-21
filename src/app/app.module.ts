@@ -3,7 +3,9 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
+import { AgmCoreModule } from '@agm/core';
 
+import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './shared/navigation/navigation.component';
 import { FooterComponent } from './shared/footer/footer.component';
@@ -18,6 +20,7 @@ const appRoutes: Routes = [
   { path: '', component: HomepageComponent },
   { path: 'flights', component: FlightSearchResultsComponent }
 ];
+const GOOGLE_API_KEY = environment.GOOGLE_API_KEY;
 
 @NgModule({
   declarations: [
@@ -35,7 +38,10 @@ const appRoutes: Routes = [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    AgmCoreModule.forRoot({
+     apiKey: GOOGLE_API_KEY
+   })
   ],
   bootstrap: [AppComponent]
 })

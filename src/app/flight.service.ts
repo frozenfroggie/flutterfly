@@ -20,8 +20,8 @@ export class FlightService {
       ));
   }
 
-  lowFareSearch(airport: {origin: string, destination: string}, date: {origin: string, destination: string}, who: number, cabinClass: string) {
-    return this.httpClient.get(`/api/flight/low-fare?origin=${airport.origin}&destination=${airport.destination}&departure_date=${date.origin}&return_date=${date.destination}&travel_class=${cabinClass}&adults=${who}`)
+  lowFareSearch(airport: {origin: string, destination: string}, date: {origin: string, destination: string}, who: number = 1, cabinClass: string = 'ECONOMY') {
+    return this.httpClient.get(`/api/flight/low-fare?origin=${airport.origin}&destination=${airport.destination}&departure_date=${date.origin}&return_date=${date.destination}&travel_class=${cabinClass}&adults=${who}&currency=EUR`)
       .pipe(map(
         (flights: {results: any[]}) => {
           return flights

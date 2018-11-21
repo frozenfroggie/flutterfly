@@ -49,7 +49,7 @@ module.exports = {
       // find client latitude and longitude coordinates based on ip
       let ip = (req.headers['x-forwarded-for'] || '').split(',').pop() || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
       // For testing purposes, set ip to 207.97.227.239 to work on localhost
-      ip = "207.97.227.239";
+      ip = "212.83.162.129";
       const { ll } = geoip.lookup(ip);
 
       // get most relevant airports in a radius of 500 km around the client coordinates
@@ -71,6 +71,8 @@ module.exports = {
         // get additional info about destination
         const locationInfo = await getLocationInfo(destination);
         inspiration.location_info = locationInfo;
+        inspiration.origin = nearestLocation.airport;
+        inspiration.originLocation = ll;
       }
 
       res.json(inspirations);
@@ -90,8 +92,8 @@ module.exports = {
   },
   lowFareSearch: async (req, res) => {
     try {
-      const { origin, destination, departure_date, return_date, travel_class, adults } = req.query;
-      const response = await axios.get(`https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?apikey=${process.env.AMADEUS_API_KEY}&origin=${origin}&destination=${destination}&departure_date=${departure_date}&number_of_results=5${return_date !== '' ? '&return_date=' + return_date : ''}&adults=${adults}&travel_class=${travel_class}&currency=PLN`)
+      const { origin, destination, departure_date, return_date, travel_class, adults, currency } = req.query;
+      const response = await axios.get(`https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?apikey=${process.env.AMADEUS_API_KEY}&origin=${origin}&destination=${destination}&departure_date=${departure_date}&number_of_results=5${return_date !== '' ? '&return_date=' + return_date : ''}&adults=${adults}&travel_class=${travel_class}&currency=${currency}`)
       res.json(response.data);
     } catch(err) {
       if(err.response.data.message === 'No result found.') {

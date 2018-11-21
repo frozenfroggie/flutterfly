@@ -1,3 +1,4 @@
+
 .main {
   .background {
     position: fixed;
@@ -20,10 +21,89 @@
     position: absolute;
     top: 0px;
     bottom: 0px;
-    height: 90%;
+    height: 100%;
     width: 100%;
     // background-image: linear-gradient(to bottom, transparent 70%, rgba(0,0,0,0.4) 100%);
     // background-image: linear-gradient(to right, rgba(238,9,121,0.6), rgba(255, 106, 0	,0.6));
 
   }
+}
+.demo {
+  position: absolute;
+  bottom: 10px;
+  color: red;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+  height: 80px;
+}
+
+#section05 a {
+padding-top: 70px;
+}
+#section05 a span {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  margin-left: -12px;
+  border-left: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  -webkit-animation: sdb05 1.5s infinite;
+  animation: sdb05 1.5s infinite;
+  box-sizing: border-box;
+}
+@-webkit-keyframes sdb05 {
+  0% {
+    -webkit-transform: rotate(-45deg) translate(0, 0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: rotate(-45deg) translate(-20px, 20px);
+    opacity: 0;
+  }
+}
+@keyframes sdb05 {
+  0% {
+    transform: rotate(-45deg) translate(0, 0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(-45deg) translate(-20px, 20px);
+    opacity: 0;
+  }
+}
+
+agm-map {
+  position: relative;
+  height: 90%;
+  width: 90%;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.show {
+  position: relative;
+  margin-top: 0vh;
+  height: 100vh;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #333;
 }

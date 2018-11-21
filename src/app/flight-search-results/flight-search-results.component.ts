@@ -9,11 +9,15 @@ import { FlightService } from '../flight.service';
 export class FlightSearchResultsComponent implements OnInit {
   title = 'flutterfly';
   flights: any[] = [];
+  currency: string = '';
   error: string = '';
 
   constructor(private flightService: FlightService) {
     this.flightService.gotFlights.subscribe(
-      (flights) => this.flights = flights
+      (flights) => {
+        this.flights = flights.results;
+        this.currency = flights.currency;
+      }
     );
     this.flightService.gotError.subscribe(
       (error) => this.error = error

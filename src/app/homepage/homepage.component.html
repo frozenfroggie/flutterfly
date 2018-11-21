@@ -4,8 +4,13 @@
   </div>
   <div class="overlay"></div>
   <section id="section05" class="demo">
-    <a href="#section06"><span></span>Scroll</a>
+    <a href="#section06"><span></span></a>
   </section>
-  <app-flight-search></app-flight-search>
+  <app-flight-search display="full"></app-flight-search>
   <app-flight-inspiration [inspirations]="inspirations"></app-flight-inspiration>
+  <div class="show">
+    <agm-map [latitude]="originLocation[0]" [longitude]="originLocation[1]" [zoom]="4">
+      <agm-marker *ngFor="let inspiration of inspirations" [latitude]="inspiration.location.latitude" [longitude]="inspiration.location.longitude"></agm-marker>
+    </agm-map>
+  </div>
 </div>

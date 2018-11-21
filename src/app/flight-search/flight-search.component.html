@@ -1,10 +1,12 @@
 <div class="form-content-wrapper">
-  <form class="form-content" (ngSubmit)="onSubmit()" [formGroup]="flightSearchForm">
+  <form [ngClass]="{'form-content': display === 'full', 'form-content-fixed': display !== 'full'}" (ngSubmit)="onSubmit()" [formGroup]="flightSearchForm">
     <app-flight-search-airport
+      [display]="display"
       (suggestedLocationClicked)="suggestedLocationClicked($event)"
       (formReady)="formInitialized('airport', $event)">
     </app-flight-search-airport>
     <app-flight-search-date
+      [display]="display"
       (dateUpdated)="dateUpdated($event)"
       (formReady)="formInitialized('date', $event)">
     </app-flight-search-date>
@@ -16,6 +18,9 @@
         <option value="first">FIRST</option>
       </select>
     </div>
-    <button type="submit" class="book-btn">Book now</button>
+    <button type="submit" class="book-btn">
+      <span *ngIf="display === 'full'">Book now</span>
+      <i class="fa fa-search" #search></i>
+    </button>
   </form>
 </div>

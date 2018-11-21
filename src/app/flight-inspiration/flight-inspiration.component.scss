@@ -1,24 +1,48 @@
-.content {
-  padding: 50px 0px;
+.inspirations-container {
   position: relative;
-  margin-top: 85vh;
-  background-color: white;
+  margin-top: 100vh;
   height: 100%;
-  width: 100%;
+  background-color: white;
   z-index: 2;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  .inspiration-container-title {
+    padding-top: 50px;
+    padding-bottom: 0px;
+    font-family: 'Lato';
+  }
+}
+
+.inspirations-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  position: relative;
+  box-sizing: border-box;
+  padding: 50px 80px;
+  height: 100%;
+  width: 100%;
+  z-index: 3;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  justify-items: center;
   display: grid;
-  grid-template-columns: 500px 500px;
-  grid-template-rows: auto auto auto;
+  grid-template-columns: auto auto auto;
   grid-column-gap: 10px;
-  grid-row-gap: 15px;
+  grid-row-gap: 20px;
   .content-photo {
     position: relative;
     height: 300px;
-    width: 500px;
+    width: 350px;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
     &:hover {
       cursor: pointer;
       .photo {
@@ -27,8 +51,8 @@
     }
     .photo {
       position: relative;
-      height: 400px;
-      min-width: 500px;
+      height: 300px;
+      min-width: 350px;
       transition: transform .2s ease-in-out;
     }
     .photo-overlay {
@@ -37,14 +61,47 @@
       left: 0px;
       height: 100%;
       width: 100%;
-      background-color: rgba(0,0,0,0.3);
+      // background-color: rgba(0,0,0,0.3);
+      background-image: linear-gradient(to top, rgba(0,0,0,0.8) 15%, transparent);
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-end;
+      &:hover {
+        cursor: pointer;
+        background-color: rgba(0,0,0,0.3);
+      }
       .overlay-country {
         color: white;
         text-align: center;
+        .price {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          font-size: 1em;
+          .price-amount {
+            font-size: 1.2em;
+            font-weight: bold;
+            padding: 10px;
+          }
+        }
       }
     }
+  }
+}
+
+.inspirations-next {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #ff6a00;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  right: 40px;
+  &:hover {
+    cursor: pointer;
   }
 }

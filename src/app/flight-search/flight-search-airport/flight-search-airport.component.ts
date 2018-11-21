@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { FlightService } from '../../flight.service';
 
@@ -8,6 +8,8 @@ import { FlightService } from '../../flight.service';
   styleUrls: ['./flight-search-airport.component.scss']
 })
 export class FlightSearchAirportComponent implements OnInit {
+
+  @Input() display: string;
 
   origin: {
     iataCode: string,

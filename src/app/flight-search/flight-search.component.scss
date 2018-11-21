@@ -71,3 +71,48 @@ input {
   border-radius: 3px;
   text-indent: 10px;
 }
+
+.form-content-fixed {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  background-image: linear-gradient(to right, #ee0979, #ff6a00);
+  position: absolute;
+  top: 70px;
+  height: 100px;
+  width: 100%;
+  .who-class-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 250px;
+    .who {
+      margin: 0px 20px;
+      width: 50px;
+    }
+    .class {
+      margin: 0px 20px;
+      width: 150px;
+      height: 52px;
+      border-width: 0px;
+      border-radius: 3px;
+      text-indent: 10px;
+      background-color: white;
+    }
+  }
+  .book-btn {
+    position: absolute;
+    right: 20px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border-width: 0px;
+    background-color: white;
+    color: #ff6a00;
+  }
+  .book-btn:hover {
+    cursor: pointer;
+  }
+}

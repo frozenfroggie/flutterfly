@@ -8,23 +8,30 @@ import { FlightInspirationService } from '../flightInspiration.service';
   styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent implements OnInit {
-  city: string = '';
-  lat: number;
-  lon: number;
+  city: string = ''
   inspirations: any[] = [];
+  originLocation: any[] = [];
 
   constructor(private flightInspirationService: FlightInspirationService) {
     this.flightInspirationService.getInspirations().subscribe(
       (inspirations) => {
         inspirations.forEach(inspiration => {
+          console.log(inspiration);
           if(inspiration.location_info) {
-            const { country, currency, name: cityName } = inspiration.location_info.city;
+            const { destination, origin, departure_date, return_date, originLocation } = inspiration;
+            const { country, currency, name: cityName, location } = inspiration.location_info.city;
+            this.originLocation = originLocation;
             this.inspirations.push({
               photoRef: undefined,
               city: cityName,
               country,
               price: inspiration.price,
-              currency
+              currency,
+              destination,
+              origin,
+              departure_date,
+              return_date,
+              location
             });
             this.flightInspirationService.placeSearch(cityName).subscribe(
               (photo) => {

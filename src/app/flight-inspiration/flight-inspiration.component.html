@@ -1,11 +1,19 @@
-<div class="content">
-  <div class="content-photo" *ngFor="let inspiration of inspirations; let i = index">
-    <img class="photo" *ngIf="inspiration.photoRef" [src]="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference=' + inspiration.photoRef + '&key=AIzaSyADkIIY-p4gp9TuXF8pDkeeYYcdUftLKpw'" />
-    <div class="photo-overlay">
-      <div class="overlay-country">
-        <h2>{{ inspiration.city }}</h2>
-        <h3>{{ inspiration.price }} {{ inspiration.currency }}</h3>
+<div class="inspirations-container">
+  <!-- <div class="inspiration-container-title"><h1>FIND INSPIRATION</h1></div> -->
+  <div class="inspirations-content">
+    <div class="content">
+      <div class="content-photo" *ngFor="let inspiration of inspirations; let i = index" (click)="flightSearch(inspiration)">
+        <img class="photo" *ngIf="inspiration.photoRef" [src]="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference=' + inspiration.photoRef + '&key=AIzaSyADkIIY-p4gp9TuXF8pDkeeYYcdUftLKpw'" />
+        <div class="photo-overlay">
+          <div class="overlay-country">
+            <h2>{{ inspiration.city }}</h2>
+            <div class="price"><span>FROM</span><span class="price-amount">{{ inspiration.price }}</span><span>{{ inspiration.currency }}</span></div>
+          </div>
+        </div>
       </div>
+    </div>
+    <div class="inspirations-next" *ngIf="inspirations.length > 0" >
+      <i class="fa fa-chevron-right fa-2x"></i>
     </div>
   </div>
 </div>

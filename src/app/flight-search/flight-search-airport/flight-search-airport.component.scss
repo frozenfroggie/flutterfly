@@ -28,3 +28,17 @@ input.ng-invalid.ng-touched {
     cursor: pointer;
   }
 }
+
+.airports {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .airport-input {
+    width: 150px;
+    margin: 0px 15px;
+  }
+  input {
+    width: 150px;
+    margin-top: 0px;
+  }
+}

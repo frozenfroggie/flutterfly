@@ -8,6 +8,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class FlightSearchDateComponent implements OnInit {
 
+  @Input() display: string;
+
   origin: {
     date: string
   } = {

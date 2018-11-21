@@ -1,4 +1,4 @@
-<div [formGroup]="airportForm">
+<div [ngClass]="{'airports': display !== 'full'}" [formGroup]="airportForm">
 
   <div class="airport-input">
     <input

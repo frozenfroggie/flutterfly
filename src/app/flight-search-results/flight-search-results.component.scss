@@ -12,10 +12,11 @@
   align-items: center;
   flex-direction: column;
   position: relative;
+  top: 200px;
   background-color: white;
   height: 100%;
   width: 100%;
-  z-index: 10;
+  z-index: 3;
   overflow-x: auto;
   .flight {
     display: grid;
