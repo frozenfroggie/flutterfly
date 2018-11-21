@@ -12,8 +12,13 @@
         </div>
       </div>
     </div>
-    <div class="inspirations-next" *ngIf="inspirations.length > 0" >
+    <div class="inspirations-next" *ngIf="inspirations.length > 0;else loading" >
       <i class="fa fa-chevron-right fa-2x"></i>
     </div>
+    <ng-template #loading>
+      <div class="loader">
+        <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+      </div>
+    </ng-template>
   </div>
 </div>
