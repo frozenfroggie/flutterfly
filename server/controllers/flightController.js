@@ -87,6 +87,7 @@ module.exports = {
       const response = await axios.get(`https://api.sandbox.amadeus.com/v1.2/airports/autocomplete?apikey=${process.env.AMADEUS_API_KEY}&term=${term}`)
       res.json(response.data);
     } catch(err) {
+      console.log(err);
       res.status(500).json({msg: err});
     }
   },

@@ -32,8 +32,9 @@ export class FlightInspirationComponent implements OnInit {
     this.router.navigate(['flights']);
     this.flightService.lowFareSearch(airport, date)
       .subscribe(
-        (flights) => {
-          this.flightService.gotFlights.emit(flights);
+        ({lowFareResponse, searchCriteria}) => {
+          this.flightService.gotCriteria.emit(searchCriteria);
+          this.flightService.gotFlights.emit(lowFareResponse);
         },
         (err) => {
           if(err.error && err.error.msg) {

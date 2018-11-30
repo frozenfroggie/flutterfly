@@ -58,6 +58,14 @@
         transform: scale(1.1);
       }
     }
+    .default-img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .fa-city {
+
+      }
+    }
     .photo {
       position: relative;
       height: 300px;

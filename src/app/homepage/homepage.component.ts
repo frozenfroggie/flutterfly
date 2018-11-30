@@ -33,6 +33,9 @@ export class HomepageComponent implements OnInit {
               return_date,
               location
             });
+            if(!cityName || true) {
+              return;
+            }
             this.flightInspirationService.placeSearch(cityName).subscribe(
               (photo) => {
                 if(photo.photo_reference) {

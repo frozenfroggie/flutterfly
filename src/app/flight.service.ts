@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class FlightService {
+  @Output() gotCriteria = new EventEmitter<any>();
   @Output() gotFlights = new EventEmitter<any>();
   @Output() gotError = new EventEmitter<any>();
 
@@ -20,11 +21,23 @@ export class FlightService {
       ));
   }
 
-  lowFareSearch(airport: {origin: string, destination: string}, date: {origin: string, destination: string}, who: number = 1, cabinClass: string = 'ECONOMY') {
+  lowFareSearch(airport: {origin: string, destination: string}, date: {origin: string, destination: string}, who: number = 1, cabinClass: string = 'economy') {
     return this.httpClient.get(`/api/flight/low-fare?origin=${airport.origin}&destination=${airport.destination}&departure_date=${date.origin}&return_date=${date.destination}&travel_class=${cabinClass}&adults=${who}&currency=EUR`)
       .pipe(map(
-        (flights: {results: any[]}) => {
-          return flights
+        (lowFareResponse: {results: any[]}) => {
+          const searchCriteria = {
+            airport: {
+              origin: airport.origin,
+              destination: airport.destination
+            },
+            date: {
+              origin: date.origin,
+              destination: date.destination
+            },
+            who,
+            cabinClass
+          }
+          return {lowFareResponse, searchCriteria}
         }
       ))
   }

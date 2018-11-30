@@ -26,6 +26,12 @@ export class FlightSearchComponent implements OnInit {
       'who': new FormControl(null, Validators.required),
       'cabinClass': new FormControl(null, Validators.required)
     });
+    this.flightService.gotCriteria.subscribe(
+      (searchCriteria) => {
+        this.flightSearchForm.setValue(searchCriteria);
+      }
+    );
+
   }
 
   formInitialized(name: string, form: FormGroup) {
@@ -43,8 +49,9 @@ export class FlightSearchComponent implements OnInit {
     this.router.navigate(['flights']);
     this.flightService.lowFareSearch(airport, date, who, cabinClass)
       .subscribe(
-        (flights) => {
-          this.flightService.gotFlights.emit(flights.results);
+        ({lowFareResponse, searchCriteria}) => {
+          this.flightService.gotCriteria.emit(searchCriteria);
+          this.flightService.gotFlights.emit(lowFareResponse);
         },
         (err) => {
           if(err.error && err.error.msg) {

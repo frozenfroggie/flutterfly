@@ -12,7 +12,7 @@
     type="date"
     [(ngModel)]="destination.date"
     (input)="onUpdateDate('destination', $event)"
-    [min]="getCurrentDate()"
+    [min]="origin.date || getCurrentDate()"
     formControlName="destination"
     />
 </div>

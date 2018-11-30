@@ -3,7 +3,12 @@
   <div class="inspirations-content">
     <div class="content">
       <div class="content-photo" *ngFor="let inspiration of inspirations; let i = index" (click)="flightSearch(inspiration)">
-        <img class="photo" *ngIf="inspiration.photoRef" [src]="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference=' + inspiration.photoRef + '&key=AIzaSyADkIIY-p4gp9TuXF8pDkeeYYcdUftLKpw'" />
+        <img class="photo" *ngIf="inspiration.photoRef;else default" [src]="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference=' + inspiration.photoRef + '&key=AIzaSyADkIIY-p4gp9TuXF8pDkeeYYcdUftLKpw'" />
+        <ng-template #default>
+          <div class="default-img">
+            <i class="fa fa-city fa-3x"></i>
+          </div>
+        </ng-template>
         <div class="photo-overlay">
           <div class="overlay-country">
             <h2>{{ inspiration.city }}</h2>
