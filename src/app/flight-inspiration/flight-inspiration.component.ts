@@ -15,6 +15,7 @@ export class FlightInspirationComponent implements OnInit {
   constructor(private flightService: FlightService, private router: Router) { }
 
   ngOnInit() {
+    console.log(this.inspirations);
   }
 
   flightSearch({departure_date, return_date, destination, origin}: {departure_date: string, return_date: string, destination: string, origin: string}) {

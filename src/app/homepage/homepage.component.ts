@@ -16,7 +16,6 @@ export class HomepageComponent implements OnInit {
     this.flightInspirationService.getInspirations().subscribe(
       (inspirations) => {
         inspirations.forEach(inspiration => {
-          console.log(inspiration);
           if(inspiration.location_info) {
             const { destination, origin, departure_date, return_date, originLocation } = inspiration;
             const { country, currency, name: cityName, location } = inspiration.location_info.city;
@@ -51,6 +50,7 @@ export class HomepageComponent implements OnInit {
           }
         }
       )
+      console.log(JSON.stringify(this.inspirations.splice(0,6), null, 2));
     });
   }
 

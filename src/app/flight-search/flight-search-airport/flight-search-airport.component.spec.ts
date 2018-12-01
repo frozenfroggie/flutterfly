@@ -1,4 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { FlightSearchAirportComponent } from './flight-search-airport.component';
 
@@ -8,7 +10,8 @@ describe('FlightSearchAirportComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FlightSearchAirportComponent ]
+      declarations: [ FlightSearchAirportComponent ],
+      imports: [ReactiveFormsModule, HttpClientModule]
     })
     .compileComponents();
   }));

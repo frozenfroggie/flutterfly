@@ -24,7 +24,7 @@ const getDateRange = () => {
 const getInspirations = async (nearestAirport, dateRange) => {
   try {
     const response = await axios.get(`https://api.sandbox.amadeus.com/v1.2/flights/inspiration-search?apikey=${process.env.AMADEUS_API_KEY}&origin=${nearestAirport}&departure_date=${dateRange.from}--${dateRange.to}&aggregation_mode=COUNTRY`);
-    const inspirations = response.data.results;
+    const inspirations = response.data.results.splice(0,6);
     const currency = response.data.currency;
     return { inspirations, currency };
   } catch(err) {
