@@ -1,8 +1,13 @@
 const helmet = require('helmet');
 const morgan = require('morgan');
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 require('dotenv').config();
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(helmet());
 
 const logger = require('./startup/logger');
 require('./startup/routes')(app);
@@ -13,8 +18,6 @@ if (process.env.NODE_ENV !== 'production') {
   logFormat = 'dev';
 }
 app.use(morgan(logFormat, {stream: logger.stream}));
-
-app.use(helmet());
 
 app.get('/api/test', (req, res) => {
   logger.error('ERROR');
