@@ -21,6 +21,8 @@ services:
     working_dir: /usr/src/flutterfly-backend
     environment:
       MONGO_URI: mongodb://mongo:27017/flutterfly
+      AMADEUS_CLIENT_ID: 'your AMADEUS_CLIENT_ID'
+      AMADEUS_CLIENT_SECRET: 'your AMADEUS_CLIENT_SECRET'
     ports:
       - "3001:3001"
     volumes:
