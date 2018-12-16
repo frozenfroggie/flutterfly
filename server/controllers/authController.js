@@ -1,5 +1,18 @@
+const axios = require('axios');
+
 module.exports = {
-  test: (req, res) => {
-    res.json({ msg: 'test' });
+  getAccessToken: async (req, res) => {
+    try {
+      const params = new URLSearchParams();
+      params.append('grant_type', 'client_credentials');
+      params.append('client_id', process.env.AMADEUS_CLIENT_ID);
+      params.append('client_secret', process.env.AMADEUS_CLIENT_SECRET);
+      const response = await axios.post('https://test.api.amadeus.com/v1/security/oauth2/token', params);
+      console.log(response.data.access_token)
+      res.json({ access_token: response.data.access_token });
+    } catch(err) {
+      console.log(err.response);
+      res.status(500).json({msg: 'getAccessToken error'});
+    }
   }
 };
