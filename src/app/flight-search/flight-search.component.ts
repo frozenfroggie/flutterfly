@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { FlightService } from '../flight.service';
+import { FlightService } from '../shared/flight.service';
 
 @Component({
   selector: 'app-flight-search',
@@ -14,7 +14,7 @@ export class FlightSearchComponent implements OnInit {
   @Input() display: string;
 
   who: number = 1;
-  cabinClass: string = 'economy';
+  cabinClass: string = 'ECONOMY';
   flightsResults = [];
 
   flightSearchForm: FormGroup;

@@ -13,9 +13,10 @@
     <div class="who-class-container">
       <input formControlName="who" class="who" type="number" min="1" max="10" placeholder="Who" [(ngModel)]="who"/>
       <select formControlName="cabinClass" class="class" [(ngModel)]="cabinClass" name="cabinClass">
-        <option value="economy">ECONOMY</option>
-        <option value="business">BUSSINESS</option>
-        <option value="first">FIRST</option>
+        <option value="ECONOMY">ECONOMY</option>
+        <option value="PREMIUM_ECONOMY">ECONOMY PREMIUM</option>
+        <option value="BUSINESS">BUSSINESS</option>
+        <option value="FIRST">FIRST</option>
       </select>
     </div>
     <button type="submit" class="book-btn">

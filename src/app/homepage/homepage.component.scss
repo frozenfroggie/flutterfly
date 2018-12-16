@@ -41,12 +41,15 @@
   height: 80px;
 }
 
-#section05 a {
+#section05 {
 padding-top: 70px;
+  &:hover {
+    cursor: pointer;
+  }
 }
-#section05 a span {
+#section05 span {
   position: absolute;
-  top: 0;
+  top: 50px;
   left: 50%;
   width: 24px;
   height: 24px;

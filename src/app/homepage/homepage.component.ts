@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { FlightInspirationService } from '../flightInspiration.service';
+import { FlightInspirationService } from '../flight-inspiration/flight-inspiration.service';
 
 @Component({
   selector: 'app-homepage',
@@ -15,28 +15,53 @@ export class HomepageComponent implements OnInit {
   constructor(private flightInspirationService: FlightInspirationService) {
     this.flightInspirationService.getInspirations().subscribe(
       (inspirations) => {
+        console.log(inspirations);
         inspirations.forEach(inspiration => {
-          if(inspiration.location_info) {
-            const { destination, origin, departure_date, return_date, originLocation } = inspiration;
-            const { country, currency, name: cityName, location } = inspiration.location_info.city;
+          console.log(inspiration.location_info)
+          if(inspiration.location_info && inspiration.location_info.city) {
+            const { destination, origin, departureDate, returnDate, originLocation } = inspiration;
+            let results = inspiration.location_info.city.results;
+            let cityName;
+            let countryName;
+            for(let i = 0; i < results.length; i++) {
+              if(!cityName) {
+                cityName = results[i].address_components.find( component => component.types.includes('locality') ) ||
+                           results[i].address_components.find( component => component.types.includes('political') );
+              }
+              if(!countryName) {
+                countryName = results[i].address_components.find( component => component.types.includes('country') );
+                console.log(countryName);
+              }
+              if(cityName && countryName) {
+                cityName = cityName.long_name;
+                countryName = countryName.long_name;
+                break;
+              }
+            }
+            console.log(cityName, countryName);
+            const currency = 'EUR';
             this.originLocation = originLocation;
             this.inspirations.push({
               photoRef: undefined,
               city: cityName,
-              country,
-              price: inspiration.price,
+              country: countryName,
+              price: inspiration.price.total,
               currency,
               destination,
               origin,
-              departure_date,
-              return_date,
-              location
+              departureDate,
+              returnDate,
+              location: {
+                latitude: inspiration.location_info.airport.lat,
+                longitude: inspiration.location_info.airport.lon
+              }
             });
-            if(!cityName || true) {
+            if(!cityName) {
               return;
             }
             this.flightInspirationService.placeSearch(cityName).subscribe(
               (photo) => {
+                console.log(photo)
                 if(photo.photo_reference) {
                   this.inspirations.map(inspiration => {
                     if (inspiration.city && inspiration.city === cityName && photo.photo_reference) {
@@ -50,7 +75,6 @@ export class HomepageComponent implements OnInit {
           }
         }
       )
-      console.log(JSON.stringify(this.inspirations.splice(0,6), null, 2));
     });
   }
 
@@ -58,4 +82,7 @@ export class HomepageComponent implements OnInit {
 
   }
 
+  scroll() {
+    window.scrollTo({top: window.innerHeight + 40, left: 0, behavior: 'smooth'})
+  }
 }

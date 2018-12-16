@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { FlightService } from '../flight.service';
+import { FlightService } from '../shared/flight.service';
 
 @Component({
   selector: 'app-flight-inspiration',
@@ -18,7 +18,7 @@ export class FlightInspirationComponent implements OnInit {
     console.log(this.inspirations);
   }
 
-  flightSearch({departure_date, return_date, destination, origin}: {departure_date: string, return_date: string, destination: string, origin: string}) {
+  flightSearch({departureDate, returnDate, destination, origin}: {departureDate: string, returnDate: string, destination: string, origin: string}) {
 
     const airport: {origin: string, destination: string} = {
       origin,
@@ -26,8 +26,8 @@ export class FlightInspirationComponent implements OnInit {
     }
 
     const date: {origin: string, destination: string} = {
-      origin: departure_date,
-      destination: return_date
+      origin: departureDate,
+      destination: returnDate
     }
 
     this.router.navigate(['flights']);

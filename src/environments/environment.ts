@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  GOOGLE_API_KEY: 'YOUR_GOOGLE_API_KEY'
+  GOOGLE_API_KEY: 'your GOOGLE_API_KEY'
 };
 
 /*
