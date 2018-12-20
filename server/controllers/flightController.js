@@ -31,9 +31,7 @@ const getInspirations = async (nearestAirport, dateRange) => {
     const currency = response.data.meta.currency;
     return { inspirations, currency };
   } catch(err) {
-    console.log(err.response.data);
     return null;
-    // throw new Error('Error in getting inspirations');
   }
 }
 
@@ -53,7 +51,6 @@ const getLocationInfo = async (destination) => {
       return null
     }
   } catch(err) {
-    debugger;
     throw err;
   }
 }
@@ -64,29 +61,23 @@ module.exports = {
     try {
       // find client latitude and longitude coordinates based on ip
       let ip = (req.headers['x-forwarded-for'] || '').split(',').pop() || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
-      // For testing purposes, set ip to 207.97.227.239 to work on localhost
-      ip = "185.126.66.172";
+
+      // For testing purposes, set IP to Hamburg
+      if(process.env.NODE_ENV === 'dev') {
+        ip = "212.1.41.12";
+      }
+
       const { ll } = geoip.lookup(ip);
       authorizationHeader = req.headers['authorization'];
       const accessToken = authorizationHeader.split(" ")[1];
-      console.log(authorizationHeader);
-      console.log(accessToken);
       if(!accessToken || accessToken === 'undefined') {
-        console.log('Not authenticated')
-        debugger;
         return res.status(401).json({
           msg: 'Not authenticated'
         });
       }
+
       // get most relevant airports in a radius of 500 km around the client coordinates
-      const nearestLocations = await getNearestLocations(ll);
-      // console.log(nearestLocations)
-      // let nearestLocation = nearestLocations.data.reduce((previousLocation, currentLocation) => {
-      //   return (currentLocation.distance < previousLocation.distance) ? currentLocation : previousLocation;
-      // });
-      // console.log(nearestLocation);
-      // For testing purposes, set nearest airport to PAR (Paris), sandbox API doesnt return any results for aiports in my country (Poland)
-      // nearestLocation.airport = 'PAR';
+      const nearestLocations = await getNearestLocations(ll)
 
       // get inspirations
       const dateRange = getDateRange();
@@ -100,30 +91,30 @@ module.exports = {
           break;
         }
       }
-      let inspirationsNum = 0;
+      let inspirationsWithLocationInfo = [];
       if(!inspirations) {
         res.json({results: []});
       }
-      for(let i = 0; inspirationsNum < 6; i++) {
-        console.log(inspirationsNum)
+      for(let i = 0; inspirationsWithLocationInfo.length < 6; i++) {
         const inspiration = inspirations[i];
         const destination = inspiration.destination;
         const price = inspiration.price;
-        // get additional info about destination
-        const locationInfo = await getLocationInfo(destination);
-        console.log("locationInfo", locationInfo)
-        if(locationInfo) {
-          inspirationsNum++;
-          inspiration.location_info = locationInfo;
-        }
         inspiration.origin = nearestLocations.data[0].iataCode;
         inspiration.originLocation = ll;
+        // get additional info about destination
+        const locationInfo = await getLocationInfo(destination);
+        if(locationInfo) {
+          inspiration.locationInfo = locationInfo;
+          inspirationsWithLocationInfo.push(inspiration);
+        }
       }
 
-      res.json(inspirations);
+      res.json({
+        inspirations: inspirationsWithLocationInfo,
+        currency
+      });
     } catch(err) {
       console.log(err);
-      debugger;
       if(err.response.status === 401) {
         return res.status(401).json({
           msg: 'Not authenticated'
@@ -138,7 +129,6 @@ module.exports = {
       const response = await axios.get(`https://test.api.amadeus.com/v1/reference-data/locations?view=LIGHT&subType=AIRPORT&keyword=${term}`, { headers: { Authorization: authorizationHeader } })
       res.json(response.data.data);
     } catch(err) {
-      debugger;
       if(err.response.status === 401) {
         return res.status(401).json({
           msg: 'Not authenticated'
@@ -151,9 +141,12 @@ module.exports = {
     try {
       const { origin, destination, departure_date, return_date, travel_class, adults, currency } = req.query;
       const response = await axios.get(`https://test.api.amadeus.com/v1/shopping/flight-offers?origin=${origin}&destination=${destination}&departureDate=${departure_date}&max=5${return_date !== '' ? '&returnDate=' + return_date : ''}&adults=${adults}&travelClass=${travel_class}&currency=${currency}`, { headers: { Authorization: authorizationHeader } })
-      res.json(response.data.data);
+      res.json({
+        data: response.data.data,
+        meta: response.data.meta
+      });
     } catch(err) {
-      if(err.response.data.errors[0].status === 404) {
+      if(err.response && err.response.data && err.response.data.errors[0].status === 404) {
         res.status(404).json({msg: err.response.data.message});
       }
       res.status(500).json({msg: err});
