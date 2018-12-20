@@ -35,11 +35,3 @@ services:
       - "9229:9229"
     volumes:
       - ./server/:/usr/src/flutterfly-backend
-    depends_on:
-      - mongo
-
-  mongo:
-    container_name: mongodb-flutterfly
-    image: mongo
-    ports:
-      - "27017:27017"
