@@ -1,5 +1,4 @@
 <div class="inspirations-container">
-  <!-- <div class="inspiration-container-title"><h1>FIND INSPIRATION</h1></div> -->
   <div class="inspirations-content">
     <div class="content" *ngIf="inspirations.length > 0; else loading" >
       <div class="content-photo" *ngFor="let inspiration of inspirations; let i = index" (click)="flightSearch(inspiration)">
@@ -9,8 +8,8 @@
             <i class="fa fa-city fa-3x"></i>
           </div>
         </ng-template>
-        <div class="photo-overlay">
-          <div class="overlay-country">
+        <div [ngClass]="{'photo-overlay': inspiration.photoRef, 'default-overlay': !inspiration.photoRef}">
+          <div [ngClass]="{'overlay-country': true, 'focus': inspirationToFocus === inspiration.destination}">
             <h2>{{ inspiration.city }}</h2>
             <div class="price"><span>FROM</span><span class="price-amount">{{ inspiration.price }}</span><span>{{ inspiration.currency }}</span></div>
           </div>

@@ -1,13 +1,13 @@
 <div>
   <app-flight-search></app-flight-search>
-  <div class="flight-results" *ngIf="flights.length > 0; else loading">
+  <div class="flight-results" *ngIf="flights.length > 0">
     <div *ngFor="let flight of flights" class="flight">
       <div class="flight-outbound">
-        <img class="flight-airlane-logo" width="70px" [src]="'https://pics.avs.io/200/200/' + flight.outbounds[0].flightSegment.carrierCode + '.png'" />
+        <img class="flight-airlane-logo" width="90px" [src]="'https://pics.avs.io/200/200/' + flight.outbounds[0].flightSegment.carrierCode + '.png'" />
         <div class="flight-time">
           <div class="from">
             {{ flight.outbounds[0].flightSegment.departure.iataCode }}
-            {{ flight.outbounds[0].flightSegment.departure.at | utcDate | date:'HH:mm' }}
+            <span>{{ flight.outbounds[0].flightSegment.departure.at | utcDate | date:'HH:mm' }}</span>
           </div>
           <div class="flight-duration">
             {{
@@ -18,18 +18,18 @@
             }}
           </div>
           <div class="to">
-            {{ flight.outbounds[flight.outbounds.length - 1].flightSegment.arrival.at | utcDate | date:'HH:mm' }}
+            <span>{{ flight.outbounds[flight.outbounds.length - 1].flightSegment.arrival.at | utcDate | date:'HH:mm' }}</span>
             {{ flight.outbounds[flight.outbounds.length - 1].flightSegment.arrival.iataCode }}
           </div>
           </div>
         <div class="flight-stops">{{ flight.outbounds.length - 1 === 0 ? "Non-Stop" : "Stops: " + (flight.outbounds.length - 1) }}</div>
       </div>
       <div class="flight-inbound">
-        <img class="flight-airlane-logo" width="70px" [src]="'https://pics.avs.io/200/200/' + flight.inbounds[0].flightSegment.carrierCode + '.png'" />
+        <img class="flight-airlane-logo" width="90px" [src]="'https://pics.avs.io/200/200/' + flight.inbounds[0].flightSegment.carrierCode + '.png'" />
         <div class="flight-time">
           <div class="from">
             {{ flight.inbounds[0].flightSegment.departure.iataCode }}
-            {{ flight.inbounds[0].flightSegment.departure.at | utcDate | date:'HH:mm' }}
+            <span>{{ flight.inbounds[0].flightSegment.departure.at | utcDate | date:'HH:mm' }}</span>
           </div>
           <div class="flight-duration">
             {{
@@ -40,18 +40,22 @@
             }}
           </div>
           <div class="to">
-            {{ flight.inbounds[flight.inbounds.length - 1].flightSegment.arrival.at | utcDate | date:'HH:mm' }}
+            <span>{{ flight.inbounds[flight.inbounds.length - 1].flightSegment.arrival.at | utcDate | date:'HH:mm' }}</span>
             {{ flight.inbounds[flight.inbounds.length - 1].flightSegment.arrival.iataCode }}
           </div>
           </div>
           <div class="flight-stops">{{ flight.inbounds.length - 1 === 0 ? "Non-Stop" : "Stops: " + (flight.inbounds.length - 1) }}</div>
       </div>
-      <div class="price"><h2>{{ flight.price + " " + criteria.currency }}</h2></div>
+      <div class="price"><h2>{{ flight.price + " " + currency }}</h2></div>
     </div>
   </div>
-  <ng-template #loading>
-    <div class="loader">
-      <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
-    </div>
-  </ng-template>
+  <div class="message-container" *ngIf="error === '' && flights.length === 0 && pending">
+    <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+  </div>
+  <div class="message-container" *ngIf="error === '' && flights.length === 0 && !pending">
+    Please fill in search criteria and click search button.
+  </div>
+  <div class="message-container"  *ngIf="error !== ''">
+    {{ error }}
+  </div>
 </div>

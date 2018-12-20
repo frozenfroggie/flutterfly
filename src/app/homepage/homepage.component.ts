@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { FlightInspirationService } from '../flight-inspiration/flight-inspiration.service';
+import { FlightService } from '../shared/flight.service';
 
 @Component({
   selector: 'app-homepage',
@@ -11,16 +12,15 @@ export class HomepageComponent implements OnInit {
   city: string = ''
   inspirations: any[] = [];
   originLocation: any[] = [];
+  inspirationToFocus: string = '';
 
-  constructor(private flightInspirationService: FlightInspirationService) {
+  constructor(private flightInspirationService: FlightInspirationService, private flightService: FlightService) {
     this.flightInspirationService.getInspirations().subscribe(
-      (inspirations) => {
-        console.log(inspirations);
+      ({inspirations, currency}) => {
         inspirations.forEach(inspiration => {
-          console.log(inspiration.location_info)
-          if(inspiration.location_info && inspiration.location_info.city) {
+          if(inspiration.locationInfo && inspiration.locationInfo.city) {
             const { destination, origin, departureDate, returnDate, originLocation } = inspiration;
-            let results = inspiration.location_info.city.results;
+            let results = inspiration.locationInfo.city.results;
             let cityName;
             let countryName;
             for(let i = 0; i < results.length; i++) {
@@ -30,7 +30,6 @@ export class HomepageComponent implements OnInit {
               }
               if(!countryName) {
                 countryName = results[i].address_components.find( component => component.types.includes('country') );
-                console.log(countryName);
               }
               if(cityName && countryName) {
                 cityName = cityName.long_name;
@@ -38,8 +37,6 @@ export class HomepageComponent implements OnInit {
                 break;
               }
             }
-            console.log(cityName, countryName);
-            const currency = 'EUR';
             this.originLocation = originLocation;
             this.inspirations.push({
               photoRef: undefined,
@@ -52,8 +49,9 @@ export class HomepageComponent implements OnInit {
               departureDate,
               returnDate,
               location: {
-                latitude: inspiration.location_info.airport.lat,
-                longitude: inspiration.location_info.airport.lon
+                latitude: inspiration.locationInfo.airport.lat,
+                longitude: inspiration.locationInfo.airport.lon,
+                name: inspiration.locationInfo.airport.name
               }
             });
             if(!cityName) {
@@ -61,7 +59,6 @@ export class HomepageComponent implements OnInit {
             }
             this.flightInspirationService.placeSearch(cityName).subscribe(
               (photo) => {
-                console.log(photo)
                 if(photo.photo_reference) {
                   this.inspirations.map(inspiration => {
                     if (inspiration.city && inspiration.city === cityName && photo.photo_reference) {
@@ -79,10 +76,33 @@ export class HomepageComponent implements OnInit {
   }
 
   ngOnInit() {
-
   }
 
-  scroll() {
+  formsInitialized() {
+    try {
+      const searchCriteria = JSON.parse(localStorage.getItem('searchCriteria'));
+      if(searchCriteria) {
+        this.flightService.gotCriteria.emit(searchCriteria);
+      } else {
+        throw new Error('searchCriteria is empty');
+      }
+    } catch(err) {
+      console.log('Error in loading search criteria from local storage', err);
+    }
+  }
+
+  onMouseOver(infoWindow, gm) {
+    if (gm.lastOpen != null) {
+      gm.lastOpen.close();
+    }
+    gm.lastOpen = infoWindow;
+    infoWindow.open();
+  }
+
+  scroll(inspirationToFocus?: string) {
     window.scrollTo({top: window.innerHeight + 40, left: 0, behavior: 'smooth'})
+    if(inspirationToFocus) {
+      this.inspirationToFocus = inspirationToFocus;
+    }
   }
 }

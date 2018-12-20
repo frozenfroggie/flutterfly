@@ -19,19 +19,32 @@ input.ng-invalid.ng-touched {
   }
 }
 .date-container-fixed {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;  min-width: 150px;
   margin-top: 0px;
+  margin: 10px;
+  @media (min-width: 1100px) {
+    flex-direction: row;
+  }
   .date-input {
     margin: 0px;
     width: 150px;
-    margin: 0px 15px;
+    margin: 5px 15px;
+    @media (min-width: 1100px) {
+      margin: 0px 15px;
+    }
   }
 }
 [type="date"] {
-  background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  92% 50% no-repeat ;
+  background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png) 92% 46% no-repeat ;
 }
 [type="date"]::-webkit-inner-spin-button {
   display: none;
 }
 [type="date"]::-webkit-calendar-picker-indicator {
   opacity: 0;
+}
+[type="date"]::-webkit-clear-button {
+  display: none;
 }

@@ -12,6 +12,7 @@ export class FlightSearchResultsComponent implements OnInit {
   criteria;
   currency: string = '';
   error: string = '';
+  pending: boolean = false;
 
   outbound = {
 
@@ -22,16 +23,27 @@ export class FlightSearchResultsComponent implements OnInit {
   }
 
   constructor(private flightService: FlightService) {
+    this.flightService.reqPending.subscribe(
+      (isPending) => {
+        this.pending = isPending;
+      }
+    );
     this.flightService.gotFlights.subscribe(
       (flights) => {
-        flights.forEach(flight => {
+        this.pending = false;
+        this.error = '';
+        if(!flights) {
+          this.flights = [];
+          return;
+        }
+        flights.data.forEach(flight => {
           this.flights.push({
             outbounds: flight.offerItems[0].services[0].segments,
             inbounds: flight.offerItems[0].services[1].segments,
             price: flight.offerItems[0].price.total
           });
         });
-        // this.currency = flights.currency;
+        this.currency = flights.meta.currency;
       }
     );
     this.flightService.gotCriteria.subscribe(
@@ -40,11 +52,16 @@ export class FlightSearchResultsComponent implements OnInit {
       }
     );
     this.flightService.gotError.subscribe(
-      (error) => this.error = error
+      (error) => {
+        this.pending = false;
+        this.flights = [];
+        this.error = error;
+      }
     );
   }
 
   ngOnInit() {
+    window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
   }
 
   calcFlightDurationFromISO(dateFrom: string, dateTo: string) {

@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { TestBed, async } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
-import { NavigationComponent } from './shared/navigation/navigation.component';
-import { FooterComponent } from './shared/footer/footer.component';
+import { NavigationComponent } from './core/navigation/navigation.component';
+import { FooterComponent } from './core/footer/footer.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 @Component({selector: 'router-outlet', template: ''})
 class RouterOutletStubComponent { }
@@ -11,6 +12,7 @@ class RouterOutletStubComponent { }
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ RouterTestingModule ],
       declarations: [
         AppComponent,
         NavigationComponent,

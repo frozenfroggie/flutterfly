@@ -16,10 +16,16 @@
     background-color: rgba(0,0,0,0.8);
     position: relative;
     top: 30px;
-    height: 80%;
-    width: 100%;
-    @media only screen and (min-width: 600px) {
+    @media (min-width: 480px) {
       border-radius: 4px;
+      height: 70%;
+      width: 55%;
+    }
+    @media (min-width: 768px) {
+      height: 70%;
+      width: 45%;
+    }
+    @media (min-width: 1100px) {
       height: 70%;
       width: 35%;
     }
@@ -80,21 +86,37 @@ input {
   background-image: linear-gradient(to right, #ee0979, #ff6a00);
   position: absolute;
   top: 70px;
-  height: 100px;
+  height: 150px;
   width: 100%;
+  @media (min-width: 1100px) {
+    height: 100px;
+  }
   .who-class-container {
     display: flex;
-    flex-direction: row;
-    align-items: flex-end;
+    flex-direction: column;
     justify-content: space-between;
     width: 250px;
+    align-items: flex-start;
+    margin: 10px;
+    @media (min-width: 1100px) {
+      align-items: flex-end;
+      flex-direction: row;
+    }
     .who {
-      margin: 0px 20px;
-      width: 50px;
+      margin: 5px 20px;
+      width: 100px;
+      @media (min-width: 1100px) {
+        margin: 0px 20px;
+        width: 50px;
+      }
     }
     .class {
-      margin: 0px 20px;
-      width: 150px;
+      margin: 5px 20px;
+      width: 100px;
+      @media (min-width: 1100px) {
+        margin: 0px 20px;
+        width: 150px;
+      }
       height: 52px;
       border-width: 0px;
       border-radius: 3px;
@@ -111,6 +133,9 @@ input {
     border-width: 0px;
     background-color: white;
     color: #ff6a00;
+    .fa-search {
+      font-size: 1.5em;
+    }
   }
   .book-btn:hover {
     cursor: pointer;

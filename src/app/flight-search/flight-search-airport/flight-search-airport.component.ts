@@ -67,9 +67,6 @@ export class FlightSearchAirportComponent implements OnInit {
       debounceTime(200),
       distinctUntilChanged())
       .subscribe(event => {
-        console.log(event);
-        console.timeEnd("inputOrigin changed after."); // No matter how frequent you type, this will always be > 1000ms
-        console.time("inputOrigin changed after."); // start track input change fire time
         this.onUpdateAirport('origin', event);
       });
     this.inputDestinationObservable = fromEvent(this.inputDestination.nativeElement, 'input')
@@ -78,9 +75,6 @@ export class FlightSearchAirportComponent implements OnInit {
       debounceTime(200),
       distinctUntilChanged())
       .subscribe(event => {
-        console.log(event);
-        console.timeEnd("inputDestination changed after."); // No matter how frequent you type, this will always be > 1000ms
-        console.time("inputDestination changed after."); // start track input change fire time
         this.onUpdateAirport('destination', event);
       });
   }
@@ -93,6 +87,18 @@ export class FlightSearchAirportComponent implements OnInit {
       return;
     }
     this.flightService.airportAutocomplete(this[direction].iataCode)
+         .pipe(
+           map(
+             (locations) => {
+               return locations.map(location => {
+                if(location.address.countryName === 'UNITED STATES OF AMERICA') {
+                  location.address.countryName = 'UNITED STATES';
+                }
+                return location;
+               })
+             }
+           )
+         )
          .subscribe(
            (locations: any[]) => {
              this[direction].autocompleteSuggestions = locations;

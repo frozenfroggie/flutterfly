@@ -1,4 +1,4 @@
-<div [ngClass]="{'airports': display !== 'full'}" [formGroup]="airportForm">
+<div [ngClass]="{'airport-search-fixed': display !== 'full'}" [formGroup]="airportForm">
 
   <div class="airport-input">
     <input
@@ -12,7 +12,7 @@
         class="location"
         *ngFor="let suggestedLocation of origin.autocompleteSuggestions"
         (click)="onClickSuggestedLocation('origin', suggestedLocation.iataCode)">
-        {{ suggestedLocation.name }}
+        {{ suggestedLocation.address.cityName }}, {{ suggestedLocation.address.countryName }} ({{suggestedLocation.iataCode}})
       </div>
     </div>
   </div>

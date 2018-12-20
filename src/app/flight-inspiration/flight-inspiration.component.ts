@@ -9,13 +9,12 @@ import { FlightService } from '../shared/flight.service';
   styleUrls: ['./flight-inspiration.component.scss']
 })
 export class FlightInspirationComponent implements OnInit {
-
   @Input() inspirations: any[];
+  @Input() inspirationToFocus: string;
 
   constructor(private flightService: FlightService, private router: Router) { }
 
   ngOnInit() {
-    console.log(this.inspirations);
   }
 
   flightSearch({departureDate, returnDate, destination, origin}: {departureDate: string, returnDate: string, destination: string, origin: string}) {
@@ -31,10 +30,13 @@ export class FlightInspirationComponent implements OnInit {
     }
 
     this.router.navigate(['flights']);
+    setTimeout(() => { // make it asynchronous
+      this.flightService.gotCriteria.emit({ who: 1, cabinClass: 'ECONOMY', airport, date });
+      this.flightService.reqPending.emit(true);
+    });
     this.flightService.lowFareSearch(airport, date)
       .subscribe(
-        ({lowFareResponse, searchCriteria}) => {
-          this.flightService.gotCriteria.emit(searchCriteria);
+        ({lowFareResponse}) => {
           this.flightService.gotFlights.emit(lowFareResponse);
         },
         (err) => {

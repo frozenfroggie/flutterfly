@@ -14,7 +14,7 @@ export class FlightInspirationService {
 
   getInspirations() {
     return this.httpClient.get('/api/flight/inspirations').pipe(map(
-        (res: any[]) => {
+        (res: {inspirations: any[], currency: string}) => {
           return res
         }
       ))

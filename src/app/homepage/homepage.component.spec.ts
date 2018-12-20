@@ -1,6 +1,7 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from '../shared/auth.service.ts';
 
 import { HomepageComponent } from './homepage.component';
 
@@ -20,6 +21,9 @@ describe('HomepageComponent', () => {
         HomepageComponent,
         FlightSearchStubComponent,
         FlightInspirationStubComponent
+     ],
+     providers: [
+       AuthService
      ],
      imports: [ HttpClientModule ],
      schemas: [ NO_ERRORS_SCHEMA ]

@@ -10,8 +10,7 @@ export class AuthService {
   getAuthorizationToken() {
     try {
       const accessToken = sessionStorage.getItem('accessToken');
-      console.log('accessToken from sessionStorage', accessToken);
-      if(!accessToken || true) {
+      if(!accessToken) {
         return undefined;
       }
       return accessToken;
@@ -24,13 +23,9 @@ export class AuthService {
     return this.httpClient.get('/api/auth').pipe(map(
       (res: {access_token: string}) => {
         sessionStorage.setItem('accessToken', res.access_token);
-        console.log('accessToken from refreshToken', res.access_token);
         return res.access_token;
       }
     ))
   }
 
-  // isAuthenticated() {
-  //   return this.accessToken != null;
-  // }
 }

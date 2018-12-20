@@ -9,33 +9,58 @@ input {
 input.ng-invalid.ng-touched {
   border: 1px solid red;
 }
+
 .airport-input {
   position: relative;
   width: 280px;
-}
-.autocomplete {
-  position: absolute;
-  top: 0px;
-  z-index: 3;
-  background-color: red;
-}
-.location {
-  position: relative;
-  background-color: white;
-  padding: 10px;
-  width: 300px;
-  &:hover {
-    cursor: pointer;
+  .autocomplete {
+    position: absolute;
+    top: 70px;
+    z-index: 6;
+    box-shadow: 1px 4px 15px -2px rgba(0,0,0,0.8);
+    border-radius: 3px;
+    .location {
+      position: relative;
+      background-color: white;
+      padding: 10px;
+      width: 400px;
+      font-weight: 0.8em;
+      z-index: 6;
+      &:hover {
+        cursor: pointer;
+        background-color: #F0F3F7;
+      }
+      &:first-child {
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+      }
+      &:last-child {
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+      }
+    }
   }
 }
 
-.airports {
+.airport-search-fixed {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
+  flex-direction: column;
+  min-width: 150px;
+  margin: 10px;
+  @media (min-width: 1100px) {
+    flex-direction: row;
+  }
   .airport-input {
     width: 150px;
-    margin: 0px 15px;
+    position: relative;
+    margin: 5px 15px;
+    @media (min-width: 1100px) {
+      margin: 0px 15px;
+    }
+    .autocomplete {
+      top: 55px;
+    }
   }
   input {
     width: 150px;

@@ -3,14 +3,27 @@
     <div class="airplane-background"></div>
   </div>
   <div class="overlay"></div>
-  <section id="section05" class="demo" (click)="scroll()">
-    <span></span>
-  </section>
-  <app-flight-search display="full"></app-flight-search>
-  <app-flight-inspiration [inspirations]="inspirations"></app-flight-inspiration>
+  <div class="arrow-scroll-container">
+    <div class="arrow-scroll" (click)="scroll()">
+      <span></span>
+    </div>
+  </div>
+  <app-flight-search
+    display="full"
+    (formsReady)="formsInitialized()">
+  </app-flight-search>
+  <app-flight-inspiration [inspirations]="inspirations" [inspirationToFocus]="inspirationToFocus">
+  </app-flight-inspiration>
   <div class="show">
-    <agm-map [latitude]="originLocation[0]" [longitude]="originLocation[1]" [zoom]="4">
-      <agm-marker *ngFor="let inspiration of inspirations" [latitude]="inspiration.location.latitude" [longitude]="inspiration.location.longitude"></agm-marker>
+    <agm-map #gm [latitude]="originLocation[0]" [longitude]="originLocation[1]" [zoom]="4">
+      <agm-marker
+        (markerClick)="scroll(inspiration.destination)"
+        (mouseOver)="onMouseOver(infoWindow,gm)"
+        *ngFor="let inspiration of inspirations" [latitude]="inspiration.location.latitude" [longitude]="inspiration.location.longitude">
+        <agm-info-window #infoWindow>
+          {{inspiration.city}} ({{inspiration.country}}), {{inspiration.location.name}} ({{inspiration.destination}})
+        </agm-info-window>
+      </agm-marker>
     </agm-map>
   </div>
 </div>

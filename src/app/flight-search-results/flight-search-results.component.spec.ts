@@ -1,6 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import {Pipe, PipeTransform} from '@angular/core';
+
+@Pipe({name: 'utcDate'})
+class MockUtcDatePipe implements PipeTransform {
+    transform(value: number): number {
+        return value;
+    }
+}
 
 import { FlightSearchResultsComponent } from './flight-search-results.component';
 
@@ -15,7 +23,8 @@ describe('FlightSearchResultsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         FlightSearchResultsComponent,
-        FlightSearchStubComponent
+        FlightSearchStubComponent,
+        MockUtcDatePipe
       ],
       imports: [
         HttpClientModule
