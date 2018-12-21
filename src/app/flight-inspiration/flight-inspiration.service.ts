@@ -12,8 +12,8 @@ export class FlightInspirationService {
   constructor(private httpClient: HttpClient, private auth: AuthService) {
   }
 
-  getInspirations() {
-    return this.httpClient.get('/api/flight/inspirations').pipe(map(
+  getInspirations(lat, lon) {
+    return this.httpClient.get(`/api/flight/inspirations?lat=${lat}&lon=${lon}`).pipe(map(
         (res: {inspirations: any[], currency: string}) => {
           return res
         }

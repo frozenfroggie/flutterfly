@@ -1,6 +1,6 @@
 <div class="inspirations-container">
   <div class="inspirations-content">
-    <div class="content" *ngIf="inspirations.length > 0; else loading" >
+    <div class="content" *ngIf="inspirations.length > 0" >
       <div class="content-photo" *ngFor="let inspiration of inspirations; let i = index" (click)="flightSearch(inspiration)">
         <img class="photo" *ngIf="inspiration.photoRef;else default" [src]="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference=' + inspiration.photoRef + '&key=AIzaSyADkIIY-p4gp9TuXF8pDkeeYYcdUftLKpw'" />
         <ng-template #default>
@@ -16,10 +16,11 @@
         </div>
       </div>
     </div>
-    <ng-template #loading>
-      <div class="loader">
-        <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
-      </div>
-    </ng-template>
+    <div class="message-container" *ngIf="error === '' && inspirations.length === 0 && pending">
+      <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+    </div>
+    <div class='message-container' *ngIf="error !== ''">
+      {{ error }}
+    </div>
   </div>
 </div>

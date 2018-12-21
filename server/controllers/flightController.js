@@ -57,17 +57,14 @@ const getLocationInfo = async (destination) => {
 
 module.exports = {
   inspirations: async (req,res) => {
+    let { lat, lon } = req.query;
+
+    // for testing purposes overwrite coordinates
+    lat = 53.551086;
+    lon = 9.993682;
+
     let inspirationsData;
     try {
-      // find client latitude and longitude coordinates based on ip
-      let ip = (req.headers['x-forwarded-for'] || '').split(',').pop() || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
-
-      // For testing purposes, set IP to Hamburg
-      if(process.env.NODE_ENV === 'dev') {
-        ip = "212.1.41.12";
-      }
-
-      const { ll } = geoip.lookup(ip);
       authorizationHeader = req.headers['authorization'];
       const accessToken = authorizationHeader.split(" ")[1];
       if(!accessToken || accessToken === 'undefined') {
@@ -77,7 +74,7 @@ module.exports = {
       }
 
       // get most relevant airports in a radius of 500 km around the client coordinates
-      const nearestLocations = await getNearestLocations(ll)
+      const nearestLocations = await getNearestLocations([lat, lon])
 
       // get inspirations
       const dateRange = getDateRange();
@@ -92,15 +89,20 @@ module.exports = {
         }
       }
       let inspirationsWithLocationInfo = [];
+
       if(!inspirations) {
-        res.json({results: []});
+        return res.json({
+          inspirations: [],
+          currency: null
+        });
       }
+
       for(let i = 0; inspirationsWithLocationInfo.length < 6; i++) {
         const inspiration = inspirations[i];
         const destination = inspiration.destination;
         const price = inspiration.price;
         inspiration.origin = nearestLocations.data[0].iataCode;
-        inspiration.originLocation = ll;
+        inspiration.originLocation = [lat, lon];
         // get additional info about destination
         const locationInfo = await getLocationInfo(destination);
         if(locationInfo) {
@@ -114,7 +116,6 @@ module.exports = {
         currency
       });
     } catch(err) {
-      console.log(err);
       if(err.response.status === 401) {
         return res.status(401).json({
           msg: 'Not authenticated'

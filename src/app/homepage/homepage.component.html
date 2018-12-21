@@ -12,7 +12,11 @@
     display="full"
     (formsReady)="formsInitialized()">
   </app-flight-search>
-  <app-flight-inspiration [inspirations]="inspirations" [inspirationToFocus]="inspirationToFocus">
+  <app-flight-inspiration
+    [error]="error"
+    [pending]="pending"
+    [inspirations]="inspirations"
+    [inspirationToFocus]="inspirationToFocus">
   </app-flight-inspiration>
   <div class="show">
     <agm-map #gm [latitude]="originLocation[0]" [longitude]="originLocation[1]" [zoom]="4">

@@ -9,6 +9,8 @@ import { FlightService } from '../shared/flight.service';
   styleUrls: ['./flight-inspiration.component.scss']
 })
 export class FlightInspirationComponent implements OnInit {
+  @Input() error: string;
+  @Input() pending: boolean;
   @Input() inspirations: any[];
   @Input() inspirationToFocus: string;
 

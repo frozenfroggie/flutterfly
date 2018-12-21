@@ -13,10 +13,35 @@ export class HomepageComponent implements OnInit {
   inspirations: any[] = [];
   originLocation: any[] = [];
   inspirationToFocus: string = '';
+  error: string = '';
+  pending: boolean = false;
 
   constructor(private flightInspirationService: FlightInspirationService, private flightService: FlightService) {
-    this.flightInspirationService.getInspirations().subscribe(
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.getInspirations(position.coords.latitude, position.coords.longitude);
+      }, (err) => {
+        console.log(err);
+        this.error = 'Sorry, your location can not be reached.';
+      });
+    } else {
+      console.log('geolocation IS NOT available');
+      this.error = 'Sorry, your location cannot be reached.';
+    }
+  }
+
+  ngOnInit() {
+  }
+
+  getInspirations(lat, lon) {
+    this.error = '';
+    this.pending = true;
+    this.flightInspirationService.getInspirations(lat, lon).subscribe(
       ({inspirations, currency}) => {
+        this.pending = false;
+        if(inspirations.length === 0) {
+          this.error = 'Sorry, inspirations not found for your location.'
+        }
         inspirations.forEach(inspiration => {
           if(inspiration.locationInfo && inspiration.locationInfo.city) {
             const { destination, origin, departureDate, returnDate, originLocation } = inspiration;
@@ -25,11 +50,11 @@ export class HomepageComponent implements OnInit {
             let countryName;
             for(let i = 0; i < results.length; i++) {
               if(!cityName) {
-                cityName = results[i].address_components.find( component => component.types.includes('locality') ) ||
-                           results[i].address_components.find( component => component.types.includes('political') );
+                cityName = results[i].address_components.find(component => component.types.includes('locality') ) ||
+                           results[i].address_components.find(component => component.types.includes('political') );
               }
               if(!countryName) {
-                countryName = results[i].address_components.find( component => component.types.includes('country') );
+                countryName = results[i].address_components.find(component => component.types.includes('country') );
               }
               if(cityName && countryName) {
                 cityName = cityName.long_name;
@@ -73,9 +98,6 @@ export class HomepageComponent implements OnInit {
         }
       )
     });
-  }
-
-  ngOnInit() {
   }
 
   formsInitialized() {
