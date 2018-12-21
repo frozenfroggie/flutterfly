@@ -10,7 +10,7 @@ Live project: [flutterfly.tk](https://www.flutterfly.tk)
 1. Clone this repo
 2. Run `npm install`
 3. Open /src/environments/environment.ts and change GOOGLE_API_KEY value to your google API key
-4. Open docker.compose.dev.yml and change AMADEUS_CLIENT_ID and AMADEUS_CLIENT_SECRET to your keys
+4. Open docker.compose.dev.yml and change AMADEUS_CLIENT_ID, AMADEUS_CLIENT_SECRET and GOOGLE_API_KEY to your keys
 5. Make sure you have Docker and Docker Compose installed on your computer
 6. Run `npm run dev`
 
@@ -20,7 +20,7 @@ Live project: [flutterfly.tk](https://www.flutterfly.tk)
 1. Clone this repo
 2. Run `npm install`
 3. Open /src/environments/environment.ts and change GOOGLE_API_KEY value to your google API key
-4. Open docker.compose.prod.yml and change AMADEUS_CLIENT_ID and AMADEUS_CLIENT_SECRET to your keys
+4. Open docker.compose.prod.yml and change AMADEUS_CLIENT_ID, AMADEUS_CLIENT_SECRET and GOOGLE_API_KEY to your keys
 5. Make sure you have docker installed and running on your computer
 6. Run `npm run prod`
 

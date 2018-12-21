@@ -27,9 +27,10 @@ services:
     command: npm run start-watch
     working_dir: /usr/src/flutterfly-backend
     environment:
-      MONGO_URI: mongodb://mongo:27017/flutterfly
       AMADEUS_CLIENT_ID: 'your AMADEUS_CLIENT_ID'
       AMADEUS_CLIENT_SECRET: 'your AMADEUS_CLIENT_SECRET'
+      GOOGLE_API_KEY: 'your GOOGLE_API_KEY'
+      NODE_ENV: 'development'
     ports:
       - "3001:3001"
       - "9229:9229"

@@ -22,6 +22,8 @@ services:
     environment:
       AMADEUS_CLIENT_ID: 'your AMADEUS_CLIENT_ID'
       AMADEUS_CLIENT_SECRET: 'your AMADEUS_CLIENT_SECRET'
+      GOOGLE_API_KEY: 'your GOOGLE_API_KEY'
+      NODE_ENV: 'production'
     ports:
       - "3001:3001"
     volumes:
