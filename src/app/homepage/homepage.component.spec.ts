@@ -1,7 +1,7 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthService } from '../shared/auth.service.ts';
+import { AuthService } from '../shared/auth.service';
 
 import { HomepageComponent } from './homepage.component';
 
