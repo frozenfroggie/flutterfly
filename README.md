@@ -1,6 +1,6 @@
 # Flutterfly
 
-This project was created for devPractice internship program. It uses Amadeus Self-Service API Air and Google Places API.
+This project was created for DevPractice internship program. It uses Amadeus Self-Service API Air and Google Places API.
 
 Live project: [flutterfly.tk](https://www.flutterfly.tk)
 
