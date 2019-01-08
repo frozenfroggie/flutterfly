@@ -107,8 +107,10 @@ export class FlightSearchAirportComponent implements OnInit {
   }
 
   onClickSuggestedLocation(direction: string, locationValue: string) {
-    this[direction].iataCode = locationValue;
     this[direction].autocompleteSuggestions = [];
+    this.airportForm.patchValue({
+      [direction]: locationValue
+    });
   }
 
 }

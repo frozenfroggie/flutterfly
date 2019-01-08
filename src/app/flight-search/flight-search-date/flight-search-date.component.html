@@ -2,7 +2,6 @@
   <input
     class="date-input"
     type="date"
-    [(ngModel)]="origin.date"
     (input)="onUpdateDate('origin', $event)"
     [min]="getCurrentDate()"
     formControlName="origin"
@@ -10,7 +9,6 @@
   <input
     class="date-input"
     type="date"
-    [(ngModel)]="destination.date"
     (input)="onUpdateDate('destination', $event)"
     [min]="origin.date || getCurrentDate()"
     formControlName="destination"
